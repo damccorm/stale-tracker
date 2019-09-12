@@ -1,0 +1,36 @@
+# Groups of contributors you"d like to watch for a given repository. Default is reserved for everyone not in a group
+groups:
+- id: "pipelines-platform"
+  github-handles: ["damccorm", "jtpetty", "mjroghelia", "stephenmichaelf", "zachariahcox"]
+  azp-emails: ["damccorm@microsoft.com", "maroghel@microsoft.com", "jopetty@microsoft.com", "stfrance@microsoft.com", "zacox@microsoft.com"]
+
+# repos to watch
+repos:
+- url: "https://github.com/microsoft/azure-pipelines-tasks"
+  groups:
+  - id: "pipelines-platform"
+    stale-pr-timeout: 24
+- url: "https://github.com/microsoft/azure-pipelines-task-lib"
+  groups:
+  - id: "pipelines-platform"
+    stale-pr-timeout: 24
+  - id: "default"
+    stale-pr-timeout: 1440 # 60 days
+- url: "https://github.com/microsoft/azure-devops-node-api"
+  groups:
+  - id: "pipelines-platform"
+    stale-pr-timeout: 24
+  - id: "default"
+    stale-pr-timeout: 1440 # 60 days
+- url: "https://github.com/microsoft/typed-rest-client"
+  groups:
+  - id: "pipelines-platform"
+    stale-pr-timeout: 24
+  - id: "default"
+    stale-pr-timeout: 1440 # 60 days
+- url: "https://github.com/microsoft/azure-pipelines-tool-lib"
+  groups:
+  - id: "pipelines-platform"
+    stale-pr-timeout: 24
+  - id: "default"
+    stale-pr-timeout: 1440 # 60 days
