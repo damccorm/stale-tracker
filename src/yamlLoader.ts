@@ -38,7 +38,7 @@ export function loadYaml(configurationPath): im.Repo[] {
         repos.forEach(repo => {
             let curRepo: im.Repo;
             if (repo.url) {
-                curRepo = {url: repo.url, type: getRepoType(repo.url), groups: []}
+                curRepo = {url: repo.url, type: getRepoType(repo.url), groups: [], stalePrs: []}
                 let repoGroups: any[] = repo.groups;
                 if (repoGroups && repoGroups.length > 0) {
                     repoGroups.forEach(group => {
