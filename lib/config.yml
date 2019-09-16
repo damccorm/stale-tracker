@@ -2,7 +2,7 @@
 groups:
 - id: "pipelines-platform"
   github-handles: ["damccorm", "jtpetty", "mjroghelia", "stephenmichaelf", "zachariahcox"]
-  azp-emails: ["damccorm@microsoft.com", "maroghel@microsoft.com", "jopetty@microsoft.com", "stfrance@microsoft.com", "zacox@microsoft.com"]
+  azp-reviewers: ["ci platform"]
 
 # repos to watch
 repos:
@@ -34,3 +34,7 @@ repos:
     stale-pr-timeout: 24
   - id: "default"
     stale-pr-timeout: 1440 # 60 days
+- url: "https://dev.azure.com/mseng/AzureDevOps/_git/AzureDevOps"
+  groups:
+  - id: "pipelines-platform"
+    stale-pr-timeout: 24

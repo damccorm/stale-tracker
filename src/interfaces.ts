@@ -5,7 +5,7 @@ export enum RepoType {
 
 export interface Group {
     githubHandles?: string[],
-    azpEmails?: string[],
+    azpReviewers?: string[],
     prTimeout?: number,
     isDefaultGroup: boolean
 }

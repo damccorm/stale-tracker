@@ -23,6 +23,7 @@
     "typescript": "^3.6.3"
   },
   "dependencies": {
+    "azure-devops-node-api": "9.0.1",
     "@octokit/rest": "^16.28.9",
     "js-yaml": "^3.13.1"
   }

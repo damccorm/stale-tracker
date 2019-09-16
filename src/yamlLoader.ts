@@ -23,8 +23,8 @@ export function loadYaml(configurationPath): im.Repo[] {
         groups.forEach(group => {
             if (group.id) {
                 const githubHandles: string[] = group['github-handles'] || [];
-                const azpEmails: string[] = group['azp-emails'] || [];
-                groupMap[group.id] = {githubHandles: githubHandles, azpEmails: azpEmails, isDefaultGroup: false}
+                const azpReviewers: string[] = group['azp-reviewers'] || [];
+                groupMap[group.id] = {githubHandles: githubHandles, azpReviewers: azpReviewers, isDefaultGroup: false}
             }
             else {
                 throw new Error('YAML Parse Error: All groups must include an id');
