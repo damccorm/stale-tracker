@@ -6,35 +6,35 @@ groups:
 
 # repos to watch
 repos:
-- url: "https://github.com/microsoft/azure-pipelines-tasks"
+- url: "https://github.com/microsoft/azure-pipelines-tasks/"
   groups:
   - id: "pipelines-platform"
     stale-pr-timeout: 24
-- url: "https://github.com/microsoft/azure-pipelines-task-lib"
-  groups:
-  - id: "pipelines-platform"
-    stale-pr-timeout: 24
-  - id: "default"
-    stale-pr-timeout: 1440 # 60 days
-- url: "https://github.com/microsoft/azure-devops-node-api"
+- url: "https://github.com/microsoft/azure-pipelines-task-lib/"
   groups:
   - id: "pipelines-platform"
     stale-pr-timeout: 24
   - id: "default"
     stale-pr-timeout: 1440 # 60 days
-- url: "https://github.com/microsoft/typed-rest-client"
+- url: "https://github.com/microsoft/azure-devops-node-api/"
   groups:
   - id: "pipelines-platform"
     stale-pr-timeout: 24
   - id: "default"
     stale-pr-timeout: 1440 # 60 days
-- url: "https://github.com/microsoft/azure-pipelines-tool-lib"
+- url: "https://github.com/microsoft/typed-rest-client/"
   groups:
   - id: "pipelines-platform"
     stale-pr-timeout: 24
   - id: "default"
     stale-pr-timeout: 1440 # 60 days
-- url: "https://dev.azure.com/mseng/AzureDevOps/_git/AzureDevOps"
+- url: "https://github.com/microsoft/azure-pipelines-tool-lib/"
+  groups:
+  - id: "pipelines-platform"
+    stale-pr-timeout: 24
+  - id: "default"
+    stale-pr-timeout: 1440 # 60 days
+- url: "https://dev.azure.com/mseng/AzureDevOps/_git/AzureDevOps/"
   groups:
   - id: "pipelines-platform"
     stale-pr-timeout: 24

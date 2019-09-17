@@ -14,7 +14,7 @@ function getRepoType(repoUrl: string): im.RepoType {
 }
 
 export function loadYaml(configurationPath): im.Repo[] {
-    const configurationContent = fs.readFileSync(configurationPath);
+    const configurationContent = fs.readFileSync(configurationPath, {encoding: 'utf8'}).toLowerCase();
     const configObject: any = yaml.safeLoad(configurationContent);
 
     let groupMap: {[id: string]: im.Group} = {};
@@ -22,7 +22,14 @@ export function loadYaml(configurationPath): im.Repo[] {
     if (groups) {
         groups.forEach(group => {
             if (group.id) {
-                const githubHandles: string[] = group['github-handles'] || [];
+                let githubHandles: string[] = group['github-handles'] || [];
+                githubHandles = githubHandles.map(handle => {
+                    // Slice leading @'s
+                    if (handle.startsWith('@')) {
+                        handle = handle.slice(1);
+                    }
+                    return handle;
+                });
                 const azpReviewers: string[] = group['azp-reviewers'] || [];
                 groupMap[group.id] = {githubHandles: githubHandles, azpReviewers: azpReviewers, isDefaultGroup: false}
             }
@@ -38,6 +45,10 @@ export function loadYaml(configurationPath): im.Repo[] {
         repos.forEach(repo => {
             let curRepo: im.Repo;
             if (repo.url) {
+                // Slice trailing /'s
+                while (repo.url.endsWith('/')) {
+                    repo.url = repo.url.slice(0, repo.url.length - 1);
+                }
                 curRepo = {url: repo.url, type: getRepoType(repo.url), groups: [], stalePrs: []}
                 let repoGroups: any[] = repo.groups;
                 if (repoGroups && repoGroups.length > 0) {
