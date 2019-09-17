@@ -158,7 +158,7 @@ function getEnv(name: string): string {
 async function getApi(serverUrl: string): Promise<nodeApi.WebApi> {
     return new Promise<nodeApi.WebApi>(async (resolve, reject) => {
         try {
-            let token = getEnv("API_TOKEN");
+            let token = getEnv("azp_token");
             let authHandler = nodeApi.getPersonalAccessTokenHandler(token);
             let option = undefined;
 

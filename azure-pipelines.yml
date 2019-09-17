@@ -23,3 +23,4 @@ steps:
   env:
     username: $(USERNAME)
     password: $(PASSWORD)
+    azp_token: $(AZP_TOKEN)
