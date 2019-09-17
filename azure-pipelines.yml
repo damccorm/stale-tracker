@@ -30,3 +30,4 @@ steps:
     password: $(PASSWORD)
     recipient: $(TO_EMAIL)
     azp_token: $(AZP_TOKEN)
+  condition: eq(variables['Build.Reason'], 'Schedule')
