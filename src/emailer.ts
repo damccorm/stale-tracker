@@ -5,7 +5,7 @@ const temp = require('./main');
 
 // async..await is not allowed in global scope, must use a wrapper
 async function main() {
-    const stalePrs: string = await temp.run();
+    const stalePrs: string = await temp.run(true);
     if (!stalePrs) {
         console.log('No stale PRs!');
         return;

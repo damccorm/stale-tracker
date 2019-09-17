@@ -33,11 +33,21 @@ function formatOutput(repos: im.Repo[], isHtml: boolean): string {
     const lineBreak = isHtml ? '<br>' : os.EOL;
     repos.forEach(repo => {
         if (repo.stalePrs && repo.stalePrs.length > 0) {
-            output += `REPO: ${formatUrl(repo.url, isHtml)}${lineBreak}`;
+            while (repo.url.endsWith('/')) {
+                repo.url = repo.url.slice(0, repo.url.length - 1);
+            }
+            const repoParts = repo.url.split('/');
+            const repoName = repoParts[repoParts.length-1];
+            if (isHtml) {
+                output += `<b>${repoName}</b>${lineBreak}`;
+            } else {
+                output += `${repoName}${lineBreak}`;
+            }
+            
             repo.stalePrs.forEach(pr => {
-                output += `${formatUrl(pr.link, isHtml)} has been untouched for ${((pr.timeSinceUpdate - pr.timeSinceUpdate%1)/24).toFixed(2)} days${lineBreak}`;
+                output += `${formatUrl(pr.link, isHtml)} has no activity for ${((pr.timeSinceUpdate - pr.timeSinceUpdate%1)/24).toFixed(2)} days${lineBreak}`;
             })
-            output += os.EOL;
+            output += lineBreak;
         }
     });
 
