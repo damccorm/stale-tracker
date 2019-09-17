@@ -6,13 +6,13 @@ const temp = require('./main');
 // async..await is not allowed in global scope, must use a wrapper
 async function main() {
     // create reusable transporter object using the default SMTP transport
-    const userName = process.env['INPUT_USERNAME'];
-    const passWord = process.env['INPUT_PASSWORD'];
+    const userName = process.env['username'];
+    const passWord = process.env['password'];
     if (!userName) {
-        throw new Error('INPUT_USERNAME must be set in the environment')
+        throw new Error('username must be set in the environment')
     }
     if (!passWord) {
-        throw new Error('INPUT_PASSWORD must be set in the environment')
+        throw new Error('password must be set in the environment')
     }
     let transporter = nodemailer.createTransport({
         service: 'gmail',
