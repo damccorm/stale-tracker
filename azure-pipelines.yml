@@ -5,7 +5,7 @@
 
 schedules:
 - cron: "7 20 * * Mon,Tue,Wed,Thu,Fri"
-  displayName: "Daily 20:07 UTC build (16:07 EST)"
+  displayName: "Daily 13:00 UTC build (9:00 EST)"
   branches:
     include:
     - master
