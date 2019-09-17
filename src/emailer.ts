@@ -5,6 +5,12 @@ const temp = require('./main');
 
 // async..await is not allowed in global scope, must use a wrapper
 async function main() {
+    const stalePrs: string = await temp.run();
+    if (!stalePrs) {
+        console.log('No stale PRs!');
+        return;
+    }
+
     // create reusable transporter object using the default SMTP transport
     const userName = process.env['username'];
     const passWord = process.env['password'];
@@ -31,7 +37,7 @@ async function main() {
         from: userName, // sender address
         to: recipient, // list of receivers
         subject: 'Stale PRs', // Subject line
-        text: await temp.run() // plain text body
+        html: stalePrs // plain text body
     });
 
     console.log('Message sent: %s', info.messageId);

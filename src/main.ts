@@ -6,13 +6,13 @@ import * as yamlLoader from './yamlLoader';
 import * as repos from './repos';
 
 
-export async function run(): Promise<string> {
+export async function run(isHtml: boolean = false): Promise<string> {
     const today: Date = new Date();
     const day = today.getDay();
     if (day == 0 || day == 6) {
-        return 'no stale prs';
+        return '';
     }
-    let loadedRepos: im.Repo[] = yamlLoader.loadYaml(path.join(__dirname, 'config.yml'));
+    let loadedRepos: im.Repo[] = yamlLoader.loadYaml(path.join(__dirname, '../config.yml'));
     for (let i = 0; i < loadedRepos.length; i++) {
         const curRepo = loadedRepos[i];
         if (curRepo.type == im.RepoType.AZP) {
@@ -25,26 +25,41 @@ export async function run(): Promise<string> {
             throw new Error(`Repo type ${curRepo.type} not supported.`);
         }
     }
-    return formatOutput(loadedRepos);
+    return formatOutput(loadedRepos, isHtml);
 }
 
-function formatOutput(repos: im.Repo[]): string {
+function formatOutput(repos: im.Repo[], isHtml: boolean): string {
     let output = '';
+    const lineBreak = isHtml ? '<br>' : os.EOL;
     repos.forEach(repo => {
         if (repo.stalePrs && repo.stalePrs.length > 0) {
-            output += `REPO: ${repo.url}${os.EOL}`;
+            output += `REPO: ${formatUrl(repo.url, isHtml)}${lineBreak}`;
             repo.stalePrs.forEach(pr => {
-                output += `${pr.link} has been untouched for ${((pr.timeSinceUpdate - pr.timeSinceUpdate%1)/24).toFixed(2)} days${os.EOL}`;
+                output += `${formatUrl(pr.link, isHtml)} has been untouched for ${((pr.timeSinceUpdate - pr.timeSinceUpdate%1)/24).toFixed(2)} days${lineBreak}`;
             })
             output += os.EOL;
         }
     });
 
     if (output == '') {
-        return 'no stale prs';
+        return '';
     }
 
     return output;
 }
 
-run().then(result => console.log(result));
+function formatUrl(curUrl: string, isHtml: boolean) {
+    if (!isHtml) {
+        return curUrl;
+    }
+    return `<a href="${curUrl}">${curUrl}</a>`
+}
+
+run().then(result => {
+    if (result) {
+        console.log(result);
+    }
+    else {
+        console.log('No stale PRs!');
+    }
+});
