@@ -39,4 +39,4 @@ steps:
   displayName: 'Find stale PRs'
   env:
     azp_token: $(AZP_TOKEN)
-  condition: neq(variables['Build.Reason'], 'Schedule')
+  condition: ne(variables['Build.Reason'], 'Schedule')
