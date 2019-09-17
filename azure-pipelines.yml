@@ -19,6 +19,11 @@ steps:
 
 - script: npm run build
 
+- script: printenv
+  env:
+    username: $(USERNAME)
+    password: $(PASSWORD)
+
 - script: node lib/emailer.js
   env:
     username: $(USERNAME)
