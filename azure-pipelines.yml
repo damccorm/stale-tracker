@@ -23,4 +23,5 @@ steps:
   env:
     username: $(USERNAME)
     password: $(PASSWORD)
+    recipient: $(TO_EMAIL)
     azp_token: $(AZP_TOKEN)

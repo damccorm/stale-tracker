@@ -8,11 +8,15 @@ async function main() {
     // create reusable transporter object using the default SMTP transport
     const userName = process.env['username'];
     const passWord = process.env['password'];
+    const recipient = process.env['recipient'];
     if (!userName) {
         throw new Error('username must be set in the environment')
     }
     if (!passWord) {
         throw new Error('password must be set in the environment')
+    }
+    if (!recipient) {
+        throw new Error('recipient must be set in the environment')
     }
     let transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -25,7 +29,7 @@ async function main() {
     // send mail with defined transport object
     let info = await transporter.sendMail({
         from: userName, // sender address
-        to: userName, // list of receivers
+        to: recipient, // list of receivers
         subject: 'Stale PRs', // Subject line
         text: await temp.run() // plain text body
     });
