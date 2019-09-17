@@ -9,3 +9,4 @@ Right now, I'm involved in several repos across Azure Pipelines and GitHub. This
 
 - Clone this repository: `git clone https://github.com/damccorm/stale-tracker && cd stale-tracker`
 - Define the repositories/contributors you'd like to watch in `config.yml`
+- Run `npm bootstrap`
