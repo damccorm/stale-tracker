@@ -6,6 +6,10 @@
 schedules:
 - cron: "7 20 * * Mon,Tue,Wed,Thu,Fri"
   displayName: "Daily 20:07 UTC build (16:07 EST)"
+  branches:
+    include:
+    - master
+  always: true
 
 pool:
   vmImage: 'ubuntu-latest'
