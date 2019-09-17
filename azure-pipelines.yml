@@ -17,6 +17,6 @@ steps:
 
 - script: npm install
 
-- script: npm run Build
+- script: npm run build
 
 - script: node lib/emailer.js
