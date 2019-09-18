@@ -4,8 +4,8 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 schedules:
-- cron: "7 20 * * Mon,Tue,Wed,Thu,Fri"
-  displayName: "Daily 13:00 UTC build (9:00 EST)"
+- cron: "30 13 * * Mon,Tue,Wed,Thu,Fri"
+  displayName: "Daily 13:30 UTC build (9:30 EST)"
   branches:
     include:
     - master
