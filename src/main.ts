@@ -45,7 +45,7 @@ function formatOutput(repos: im.Repo[], isHtml: boolean): string {
             }
             
             repo.stalePrs.forEach(pr => {
-                output += `${formatUrl(pr.link, isHtml)} has no activity for ${((pr.timeSinceUpdate - pr.timeSinceUpdate%1)/24).toFixed(2)} days${lineBreak}`;
+                output += `${formatUrl(pr.title, pr.link, isHtml)} has no activity for ${((pr.timeSinceUpdate - pr.timeSinceUpdate%1)/24).toFixed(1)} days${lineBreak}`;
             })
             output += lineBreak;
         }
@@ -58,11 +58,11 @@ function formatOutput(repos: im.Repo[], isHtml: boolean): string {
     return output;
 }
 
-function formatUrl(curUrl: string, isHtml: boolean) {
+function formatUrl(title: string, curUrl: string, isHtml: boolean) {
     if (!isHtml) {
-        return curUrl;
+        return `${title}: ${curUrl}`;
     }
-    return `<a href="${curUrl}">${curUrl}</a>`
+    return `<a href="${curUrl}">${title}</a>`
 }
 
 run().then(result => {

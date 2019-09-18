@@ -26,8 +26,10 @@ export async function processGitHubRepo(repo: im.Repo): Promise<im.Repo> {
 
     pullRequests.forEach(pull => {
         let duration: number = Date.now() - <any>(new Date(pull.updated_at)); //Duration in ms
-        duration = duration / 1000 / 60 / 60; //Duration in h.
-        const curPr: im.PullRequest = {author: pull.user.login, timeSinceUpdate: duration, link: `${repo.url}/pull/${pull.number}`};
+        duration = duration / 1000 / 60 / 60; //Duration in h.'
+
+        const link = `${repo.url}/pull/${pull.number}`;
+        const curPr: im.PullRequest = {author: pull.user.login, timeSinceUpdate: duration, link: link, title: pull.title};
         let isStale = false;
         repo.groups.forEach(group => {
             if (!isStale && group.githubHandles && (group.githubHandles.indexOf(curPr.author.toLowerCase()) > 0 || group.isDefaultGroup)) {
@@ -105,7 +107,9 @@ async function getAzpPullRequests(id, gitApiObject, groups: im.Group[], repoUrl:
                                     let duration: number = Date.now() - mostRecentUpdate; //Duration in ms
                                     duration = duration / 1000 / 60 / 60; //Duration in h.
 
-                                    const formattedPull: im.PullRequest = {author: author, timeSinceUpdate: duration, link: getPullRequestUrl(repoUrl, pull.pullRequestId)};
+                                    const link = getPullRequestUrl(repoUrl, pull.pullRequestId);
+
+                                    const formattedPull: im.PullRequest = {author: author, timeSinceUpdate: duration, link: link, title: pull.title || link};
                                     if (isPrStale(group, formattedPull)) {
                                         stalePulls.push(formattedPull);
                                         isStale = true;

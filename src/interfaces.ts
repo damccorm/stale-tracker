@@ -12,6 +12,7 @@ export interface Group {
 
 export interface PullRequest {
     author: string,
+    title: string,
     timeSinceUpdate: number,
     link: string
 }
