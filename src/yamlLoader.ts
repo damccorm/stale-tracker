@@ -31,7 +31,8 @@ export function loadYaml(configurationPath): im.Repo[] {
                     return handle;
                 });
                 const azpReviewers: string[] = group['azp-reviewers'] || [];
-                groupMap[group.id] = {githubHandles: githubHandles, azpReviewers: azpReviewers, isDefaultGroup: false}
+                const ignoreLabels = group['ignore-labels'] || [];
+                groupMap[group.id] = {githubHandles: githubHandles, azpReviewers: azpReviewers, isDefaultGroup: false, ignoreLabels: ignoreLabels}
             }
             else {
                 throw new Error('YAML Parse Error: All groups must include an id');
@@ -55,8 +56,9 @@ export function loadYaml(configurationPath): im.Repo[] {
                     repoGroups.forEach(group => {
                         if (group.id) {
                             const prTimeout = group['stale-pr-timeout'] || null;
+                            const ignoreLabels = group['ignore-labels'] || [];
                             if (group.id === 'default') {
-                                curRepo.groups.push({isDefaultGroup: true, prTimeout: prTimeout})
+                                curRepo.groups.push({isDefaultGroup: true, prTimeout: prTimeout, ignoreLabels: ignoreLabels})
                             }
                             else {
                                 if (group.id in groupMap) {

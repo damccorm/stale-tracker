@@ -4,7 +4,6 @@ import * as nodeApi from "azure-devops-node-api";
 
 import * as GitApi from "azure-devops-node-api/GitApi";
 import * as GitInterfaces from "azure-devops-node-api/interfaces/GitInterfaces";
-import { url } from 'inspector';
 
 // Returns repos with stale PRs correctly classified
 export async function processGitHubRepo(repo: im.Repo): Promise<im.Repo> {
@@ -32,8 +31,17 @@ export async function processGitHubRepo(repo: im.Repo): Promise<im.Repo> {
         const curPr: im.PullRequest = {author: pull.user.login, timeSinceUpdate: duration, link: link, title: pull.title};
         let isStale = false;
         repo.groups.forEach(group => {
-            if (!isStale && group.githubHandles && (group.githubHandles.indexOf(curPr.author.toLowerCase()) > 0 || group.isDefaultGroup)) {
-                isStale = isPrStale(group, curPr);
+            if (!isStale && group.githubHandles && (group.githubHandles.indexOf(curPr.author.toLowerCase()) > -1 || group.isDefaultGroup)) {
+                let ignorePull = false;
+                // Check labels
+                pull.labels.forEach(label => {
+                    if (!ignorePull && group.ignoreLabels.indexOf(label) > -1) {
+                        ignorePull = true;
+                    }
+                })
+                if (!ignorePull) {
+                    isStale = isPrStale(group, curPr);
+                }
             }
         });
 
@@ -83,7 +91,17 @@ async function getAzpPullRequests(id, gitApiObject, groups: im.Group[], repoUrl:
                 let isStale = false;
                 for (let k = 0; k < groups.length; k++) {
                     const group = groups[k];
-                    if (!isStale) {
+                    // Check ignoreLabels
+                    let ignorePull = false;
+                    (pull.labels || []).forEach(label => {
+                        // console.log('label', JSON.stringify(label));
+                        if (!ignorePull && label.name && label.active && group.ignoreLabels.indexOf(label.name) > -1) {
+                            ignorePull = true;
+                        }
+                    })
+
+                    // Check reviewers
+                    if (!ignorePull && !isStale) {
                         for (let l = 0; l < (group.azpReviewers || []).length; l++) {
                             const azpReviewer = group.azpReviewers![l]
                             if (!isStale) {
@@ -93,9 +111,7 @@ async function getAzpPullRequests(id, gitApiObject, groups: im.Group[], repoUrl:
                                         author = pull.createdBy.displayName
                                     }
 
-                                    // TODO - get actual time since update
                                     let mostRecentUpdate: any = await getAzpMostRecentComment(id, gitApiObject, pull);
-                                    // TODO
                                     if (pull.commits) {
                                         pull.commits.forEach(commit => {
                                             if(commit.committer && commit.committer.date && commit.committer.date > mostRecentUpdate) {

@@ -3,6 +3,7 @@ groups:
 - id: "pipelines-platform"
   github-handles: ["alex-peck", "damccorm", "jeschu1", "jpricket", "jtpetty", "mjroghelia", "stephenmichaelf", "zachariahcox"]
   azp-reviewers: ["ci platform"]
+  ignore-labels: ["not-stale"]
 
 # repos to watch
 repos:

@@ -38,8 +38,8 @@ If you want automatic, scheduled updates, consider using Azure Pipelines [schedu
 
 Lots of this is low hanging fruit that I didn't implement since it didn't fit my use case.
 
-- Ignore PRs with certain labels
 - Private GitHub repos
 - Public AZP repos without a AZP PAT
 - Other Source Control providers (e.g. GitLab, BitBucket, etc...)
 - Multiple Email recipients
+- Better Error Handling
