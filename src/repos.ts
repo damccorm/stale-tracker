@@ -35,7 +35,7 @@ export async function processGitHubRepo(repo: im.Repo): Promise<im.Repo> {
                 let ignorePull = false;
                 // Check labels
                 pull.labels.forEach(label => {
-                    if (!ignorePull && group.ignoreLabels.indexOf(label) > -1) {
+                    if (!ignorePull && group.ignoreLabels.indexOf(label.name) > -1) {
                         ignorePull = true;
                     }
                 })
